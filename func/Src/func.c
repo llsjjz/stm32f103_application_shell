@@ -3,6 +3,7 @@
 #include "led.h"
 #include "debug.h"
 #include "key.h"
+#include "vTaskShell.h"
 
 
 //******************************************************************************************/
@@ -14,10 +15,12 @@ static uint8_t rxbuffer[UART_MAX];
 void func_init(void)
 {
   Func_Uart_Init(&uart1,rxbuffer,UART_MAX,txbuffer,UART_MAX,&huart1);
+  AppShellInit();
 
   // 创建任务
   xTaskCreate(vTaskLED, "LED", LED_StackSize, NULL, LED_Priority, &LED_TaskHandle); // 优先级设为 2，较高
   xTaskCreate(vTaskDebug, "Debug", DEBUG_StackSize, NULL, DEBUG_Priority, NULL); // 优先级设为 1，较高
+  xTaskCreate(vTaskShell, "Shell", SHELL_StackSize, NULL, SHELL_Priority, NULL); // 优先级设为 1，较高
 
   vTaskStartScheduler();
 }
