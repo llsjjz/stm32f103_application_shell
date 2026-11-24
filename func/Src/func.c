@@ -17,6 +17,7 @@ void func_init(void)
 
   // 创建任务
   xTaskCreate(vTaskLED, "LED", LED_StackSize, NULL, LED_Priority, &LED_TaskHandle); // 优先级设为 2，较高
+  xTaskCreate(vTaskDebug, "Debug", DEBUG_StackSize, NULL, DEBUG_Priority, NULL); // 优先级设为 1，较高
 
   vTaskStartScheduler();
 }

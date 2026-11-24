@@ -9,7 +9,7 @@ extern "C" {
 #endif
 
 #define UART_NUM 1
-#define UART_MAX 255
+#define UART_MAX 512
 #define UART_MAXNUM 255
 
 typedef struct {

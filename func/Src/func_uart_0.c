@@ -61,18 +61,14 @@ static uint8_t s_txbuffer[UART_NUM][UART_MAX];
  */
 static uint32_t Func_Uart_EnterCritical(void)
 {
-    // uint32_t primask = __get_PRIMASK();
-    // __disable_irq();
-    // return primask;
-    vPortEnterCritical();
-    return 0;
+    uint32_t primask = __get_PRIMASK();
+    __disable_irq();
+    return primask;
 }
 
 static void Func_Uart_ExitCritical(uint32_t primask)
 {
-    // __set_PRIMASK(primask);
-    primask = 0;
-    vPortExitCritical();
+    __set_PRIMASK(primask);
 }
 
 //****************基础发送与接收**************************************************************//

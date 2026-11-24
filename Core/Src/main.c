@@ -26,7 +26,8 @@
 /* USER CODE BEGIN Includes */
 #include "FreeRTOS.h"
 #include "task.h"
-#include "queue.h" // 如果需要使用队列等功能
+
+#include "func.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -58,12 +59,6 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void vTaskLED(void *pvParameters) {
-  for (;;) {
-    HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_1); // 假设LED连接在PD0引脚
-    vTaskDelay(500); // 延迟500个时钟节拍，即500ms (假设configTICK_RATE_HZ=1000)
-  }
-}
 
 /* USER CODE END 0 */
 
@@ -99,17 +94,14 @@ int main(void)
   MX_DMA_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  // 创建任务
-  xTaskCreate(vTaskLED, "LED_Task", 128, NULL, 2, NULL);
-
-  // 启动FreeRTOS调度器，永远不会返回
-  vTaskStartScheduler();
+  func_init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    func_while();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
